@@ -1,10 +1,7 @@
 package com.example.mobile_project_notes_app.components.Category
 
-
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -29,14 +26,20 @@ import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CategoryBottomSheet(isSheetOpen: Boolean, onSheetStateChange: (Boolean) -> Unit) {
+fun CategoryBottomSheet(
+    isSheetOpen: Boolean,
+    onSheetStateChange: (Boolean) -> Unit,
+    onAddCategory: (String) -> Unit
+) {
     val sheetState = rememberModalBottomSheetState()
     var text by rememberSaveable { mutableStateOf("") }
+
     if (isSheetOpen) {
         ModalBottomSheet(
             sheetState = sheetState,
             onDismissRequest = {
                 onSheetStateChange(false)
+                text = ""
             }
         ) {
             Column(
@@ -47,15 +50,15 @@ fun CategoryBottomSheet(isSheetOpen: Boolean, onSheetStateChange: (Boolean) -> U
             ) {
                 Text(
                     text = "New Category",
-                    fontWeight = FontWeight.Medium, fontSize =
-                        24.sp
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 24.sp
                 )
                 Spacer(modifier = Modifier.padding(vertical = 8.dp))
 
                 OutlinedTextField(
                     value = text,
                     onValueChange = { newText -> text = newText },
-                    placeholder = { Text(text = "Example:Work,TO-DO,Groceries") },
+                    placeholder = { Text(text = "Example: Work, TO-DO, Groceries") },
                     label = { Text(text = "Category") },
                     singleLine = true,
                     colors = OutlinedTextFieldDefaults.colors(
@@ -67,14 +70,17 @@ fun CategoryBottomSheet(isSheetOpen: Boolean, onSheetStateChange: (Boolean) -> U
                 )
                 Spacer(modifier = Modifier.padding(vertical = 100.dp))
                 Button(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(),
-                    onClick = {},
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = {
+                        if (text.isNotBlank()) {
+                            onAddCategory(text)
+                            text = ""
+                        }
+                    },
+                    enabled = text.isNotBlank()
                 ) {
                     Text("Add Category")
                 }
-
             }
         }
     }

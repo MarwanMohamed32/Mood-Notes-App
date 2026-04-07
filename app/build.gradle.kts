@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
 }
 
 android {
@@ -42,12 +43,17 @@ android {
 }
 
 dependencies {
+    val room_version = "2.8.3"
     implementation(libs.material)
     implementation(libs.androidx.navigation.compose)
-    val room_version = "2.8.3"
-
-////    Room
+//    Koin
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+//    Room
     implementation(libs.androidx.room.runtime)
+
+
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.core.ktx)
@@ -66,5 +72,13 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation("androidx.compose.material:material-icons-core:1.7.5")
+    implementation("androidx.compose.material:material-icons-core:1.7.8")
+//    Nav 3
+    implementation(libs.androidx.navigation3.ui)
+    implementation(libs.androidx.navigation3.runtime)
+    implementation(libs.androidx.lifecycle.viewmodel.navigation3)
+    implementation(libs.androidx.material3.adaptive.navigation3)
+    implementation(libs.kotlinx.serialization.core)
+
+    implementation("com.google.accompanist:accompanist-permissions:0.37.3")
 }
