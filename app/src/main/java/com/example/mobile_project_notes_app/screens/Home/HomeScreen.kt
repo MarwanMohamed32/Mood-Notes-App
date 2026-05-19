@@ -31,11 +31,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.example.mobile_project_notes_app.R
 import com.example.mobile_project_notes_app.components.Common.AnimatedFab
-import com.example.mobile_project_notes_app.components.Category.Category
-import com.example.mobile_project_notes_app.components.Category.CategoryBottomSheet
+import com.example.mobile_project_notes_app.features.feature_category.presentation.CategoryBottomSheet
 import com.example.mobile_project_notes_app.components.Common.GlassyIconButton
 import com.example.mobile_project_notes_app.components.Note.NoteComponent
 import com.example.mobile_project_notes_app.components.Common.SearchBar
@@ -44,8 +42,9 @@ import com.example.mobile_project_notes_app.ui.theme.CoralBlaze
 import com.example.mobile_project_notes_app.ui.theme.HoneyGold
 import com.example.mobile_project_notes_app.ui.theme.MidnightIndigo
 import com.example.mobile_project_notes_app.ui.theme.TropicalTeal
-import com.example.mobile_project_notes_app.viewmodel.CategoryViewModel
-import com.example.mobile_project_notes_app.viewmodel.NoteViewModel
+import com.example.mobile_project_notes_app.features.feature_category.presentation.CategoryViewModel
+import com.example.mobile_project_notes_app.features.feature_note.presentation.NoteViewModel
+import com.example.mobile_project_notes_app.models.Category
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -70,7 +69,9 @@ fun HomeScreen(
 
     Scaffold(
         floatingActionButton = {
-            AnimatedFab(onMenuItemClick = onNavigateToAddNote)
+            AnimatedFab(
+                onMenuItemClick = { type -> onNavigateToAddNote(type) }
+            )
         }
     ) { innerPadding ->
         Column(

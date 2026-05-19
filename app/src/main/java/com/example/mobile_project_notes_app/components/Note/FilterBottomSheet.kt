@@ -30,6 +30,7 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -46,17 +47,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mobile_project_notes_app.data.entity.Category
 import com.example.mobile_project_notes_app.models.NoteColor
-import com.example.mobile_project_notes_app.viewmodel.CategoryViewModel
+import com.example.mobile_project_notes_app.features.feature_category.presentation.CategoryViewModel
+import com.example.mobile_project_notes_app.ui.theme.AppColors
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.forEach
 
 
 val noteColors = listOf(
-    NoteColor(colorName = "Vanilla Oat", Color(0xFFF6ECC9), Color(0xFFF1D04C)),
-    NoteColor(colorName = "Terracotta Punch", Color(0xFFEA7A53), Color(0xFFE0562E)),
-    NoteColor(colorName = "Golden Marigold", Color(0xFFE7B93F), Color(0xFFD39A1A)),
-    NoteColor(colorName = "Powder Sky", Color(0xFF99B7DD), Color(0xFF5F8FCB)),
-    NoteColor(colorName = "Spring Pea", Color(0xFFADD276), Color(0xFF7FB63B)),
+    NoteColor(colorName = "Vanilla Oat", AppColors.Note.vanillaOat, AppColors.Note.vanillaOatText),
+    NoteColor(colorName = "Terracotta Punch", AppColors.Note.terracottaPunch, AppColors.Note.terracottaPunchText),
+    NoteColor(colorName = "Golden Marigold", AppColors.Note.goldenMarigold, AppColors.Note.goldenMarigoldText),
+    NoteColor(colorName = "Powder Sky", AppColors.Note.powderSky, AppColors.Note.powderSkyText),
+    NoteColor(colorName = "Spring Pea", AppColors.Note.springPea, AppColors.Note.springPeaText),
 )
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
@@ -65,14 +67,23 @@ fun FilterBottomSheet(
     isSheetOpen: Boolean,
     onSheetStateChange: (Boolean) -> Unit,
     onChangeApplied: (NoteColor, Category) -> Unit,
-    categoryViewModel: CategoryViewModel
+    categoryViewModel: CategoryViewModel,
+    initialSelectedColor: NoteColor = noteColors[0],
+    initialSelectedCategory: Category = Category("All")
 ) {
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true
     )
-    var selectedColor by remember { mutableStateOf<NoteColor>(noteColors[0]) }
+    var selectedColor by remember { mutableStateOf(initialSelectedColor) }
     val categoryList by categoryViewModel.allCategories.collectAsState(initial = emptyList())
-    var selectedCategory by remember { mutableStateOf<Category>(Category("All")) }
+    var selectedCategory by remember { mutableStateOf(initialSelectedCategory) }
+
+    LaunchedEffect(isSheetOpen) {
+        if (isSheetOpen) {
+            selectedColor = initialSelectedColor
+            selectedCategory = initialSelectedCategory
+        }
+    }
 
     if (isSheetOpen) {
         ModalBottomSheet(
@@ -134,7 +145,7 @@ fun FilterBottomSheet(
                         Row(
                             modifier = Modifier
                                 .clip(CircleShape)
-                                .background(Color(0xFFE8E8E8))
+                                .background(AppColors.selectionChipBackground)
                                 .border(
                                     width = 2.dp,
                                     color = if (selectedColor == noteColor) Color.Black else Color.Transparent,
@@ -165,7 +176,7 @@ fun FilterBottomSheet(
                 Divider(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(Color(0xFFE8E8E8))
+                        .background(AppColors.selectionChipBackground)
                 )
                 Spacer(
                     modifier = Modifier
@@ -193,7 +204,7 @@ fun FilterBottomSheet(
                         Row(
                             modifier = Modifier
                                 .clip(CircleShape)
-                                .background(Color(0xFFE8E8E8))
+                                .background(AppColors.selectionChipBackground)
                                 .border(
                                     width = 2.dp,
                                     color = if (selectedCategory == category) Color.Black else Color.Transparent,
@@ -238,8 +249,8 @@ fun FilterBottomSheet(
                             .background(
                                 brush = Brush.horizontalGradient(
                                     colors = listOf(
-                                        Color(0xFF40A474),
-                                        Color(0xFF165A2F)
+                                        AppColors.actionGradientStart,
+                                        AppColors.actionGradientEnd
                                     )
                                 ),
                                 shape = RoundedCornerShape(12.dp)

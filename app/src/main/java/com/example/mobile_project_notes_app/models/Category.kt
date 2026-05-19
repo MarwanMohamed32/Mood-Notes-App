@@ -1,7 +1,5 @@
-package com.example.mobile_project_notes_app.components.Category
-
+package com.example.mobile_project_notes_app.models
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding

@@ -1,9 +1,9 @@
-package com.example.mobile_project_notes_app.viewmodel
+package com.example.mobile_project_notes_app.features.feature_note.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mobile_project_notes_app.data.local.database.entity.Note
-import com.example.mobile_project_notes_app.data.repository.NoteRepository
+import com.example.mobile_project_notes_app.features.feature_note.domain.NoteRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -16,7 +16,7 @@ class NoteViewModel(
     val allNotes: StateFlow<List<Note>> =
         repository.getAllNotes().stateIn(
             scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
+            started = SharingStarted.Companion.WhileSubscribed(5000),
             initialValue = emptyList()
         )
 
@@ -89,7 +89,7 @@ class NoteViewModel(
     fun getNotesFromCategory(categoryName: String): StateFlow<List<Note>> =
         repository.getNotesFromCategory(categoryName).stateIn(
             scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
+            started = SharingStarted.Companion.WhileSubscribed(5000),
             initialValue = emptyList()
         )
 }

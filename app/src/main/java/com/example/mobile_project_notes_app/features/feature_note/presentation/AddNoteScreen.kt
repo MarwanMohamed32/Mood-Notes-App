@@ -1,4 +1,4 @@
-package com.example.mobile_project_notes_app.screens
+package com.example.mobile_project_notes_app.features.feature_note.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -8,57 +8,35 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.toColorLong
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.example.mobile_project_notes_app.R
 import com.example.mobile_project_notes_app.components.Common.GlassyIconButton
 import com.example.mobile_project_notes_app.components.Note.FilterBottomSheet
 import com.example.mobile_project_notes_app.data.entity.Category
 import com.example.mobile_project_notes_app.models.NoteColor
 import com.example.mobile_project_notes_app.models.NoteType
-import com.example.mobile_project_notes_app.navigation.Route
-import com.example.mobile_project_notes_app.viewmodel.CategoryViewModel
-import com.example.mobile_project_notes_app.viewmodel.NoteViewModel
+import com.example.mobile_project_notes_app.features.feature_category.presentation.CategoryViewModel
+import com.example.mobile_project_notes_app.ui.theme.AppColors
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -79,8 +57,8 @@ fun AddNoteScreen(
         mutableStateOf(
             NoteColor(
                 colorName = "Vanilla Oat",
-                Color(0xFFF6ECC9),
-                Color(0xFFF1D04C)
+                AppColors.Note.vanillaOat,
+                AppColors.Note.vanillaOatText
             )
         )
     }

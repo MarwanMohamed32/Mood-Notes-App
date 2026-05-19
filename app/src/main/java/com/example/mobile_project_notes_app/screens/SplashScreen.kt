@@ -40,7 +40,6 @@ import com.example.mobile_project_notes_app.ui.theme.MidnightIndigo
 import com.example.mobile_project_notes_app.ui.theme.TropicalTeal
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import com.example.mobile_project_notes_app.ExternalLibs.polarLineTo
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
@@ -105,6 +104,7 @@ fun SplashScreen(onNavigateToHome: () -> Unit) {
                 )
             }
         }
+        delay(2000)
         onNavigateToHome()
     }
 

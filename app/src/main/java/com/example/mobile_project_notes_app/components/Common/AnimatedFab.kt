@@ -53,7 +53,6 @@ fun AnimatedFab(
     val menuItems = listOf(
         FabMenuEntry("Text Note", R.drawable.written_note_ico, NoteType.TEXT),
         FabMenuEntry("Image Note", R.drawable.image_note_ico, NoteType.IMAGE),
-        FabMenuEntry("Voice Note", R.drawable.voice_note_ico, NoteType.VOICE)
     )
 
     Box(contentAlignment = Alignment.BottomCenter) {

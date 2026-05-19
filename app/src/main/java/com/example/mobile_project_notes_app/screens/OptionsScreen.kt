@@ -42,6 +42,7 @@ import kotlin.math.roundToInt
 import androidx.compose.ui.unit.IntOffset
 import androidx.navigation.NavController
 import com.example.mobile_project_notes_app.navigation.Route
+import com.example.mobile_project_notes_app.ui.theme.AppColors
 
 @Composable
 fun OptionsScreen(
@@ -54,8 +55,8 @@ fun OptionsScreen(
             .background(
                 Brush.verticalGradient(
                     colors = listOf(
-                        Color(0xFF40A474),
-                        Color(0xFF165A2F)
+                        AppColors.actionGradientStart,
+                        AppColors.actionGradientEnd
                     )
                 )
             ),

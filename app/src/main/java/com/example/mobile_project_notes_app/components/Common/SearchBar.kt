@@ -22,6 +22,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mobile_project_notes_app.R
+import com.example.mobile_project_notes_app.ui.theme.AppColors
 
 @Composable
 fun SearchBar() {
@@ -31,7 +32,7 @@ fun SearchBar() {
         modifier = Modifier
             .fillMaxWidth()
             .clip(CircleShape)
-            .background(Color(0xFFEEEEEE))
+            .background(AppColors.searchBackground)
             .padding(horizontal = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {

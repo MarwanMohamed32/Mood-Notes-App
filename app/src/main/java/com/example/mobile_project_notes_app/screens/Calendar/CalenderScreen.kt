@@ -1,6 +1,5 @@
 package com.example.mobile_project_notes_app.screens.Calendar
 
-import BorderedCircledIcon
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -13,14 +12,14 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -36,18 +35,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.example.mobile_project_notes_app.R
-import com.example.mobile_project_notes_app.components.Calendar.DatePickerBottomSheet
+import com.example.mobile_project_notes_app.features.feature_calendar.presentation.DatePickerBottomSheet
 import com.example.mobile_project_notes_app.components.Common.GlassyIconButton
-import com.example.mobile_project_notes_app.viewmodel.CalendarViewModel
+import com.example.mobile_project_notes_app.features.feature_calendar.presentation.CalendarViewModel
+import com.example.mobile_project_notes_app.ui.theme.AppColors
 import org.koin.androidx.compose.koinViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -178,7 +176,7 @@ fun CalendarScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(16.dp))
-                    .background(Color(0xFFBEFBAD))
+                    .background(AppColors.Calendar.goodMood)
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -222,15 +220,11 @@ fun CalendarDayCell(day: CalendarDay, mood: String?) {
     if (day.dayOfMonth <= 0) return
 
     val isValentinesDay = day.date.endsWith("-02-14")
-    val moodResId: Int = if (isValentinesDay) {
-        R.drawable.manoon
-    } else {
-        when (mood?.trim()) {
-            "Good" -> R.drawable.good_mood
-            "NotBad", "Not Bad" -> R.drawable.not_bad_mood
-            "Bad" -> R.drawable.angry_mood
-            else -> R.drawable.good_mood
-        }
+    val moodResId: Int = when (mood?.trim()) {
+        "Good" -> R.drawable.good_mood
+        "NotBad", "Not Bad" -> R.drawable.not_bad_mood
+        "Bad" -> R.drawable.angry_mood
+        else -> R.drawable.good_mood
     }
 
     Log.d("Mood:  $mood", "mood")
@@ -250,16 +244,19 @@ fun CalendarDayCell(day: CalendarDay, mood: String?) {
                 .background(
                     brush = Brush.verticalGradient(
                         colors = listOf(
-                            Color(0xFFA9E3ED),
-                            Color(0xFF4899F7)
+                            AppColors.Calendar.valentineGradientTop,
+                            AppColors.Calendar.valentineGradientMiddle,
+                            AppColors.Calendar.valentineGradientBottom
                         )
                     )
-                )
+                ),
+            contentAlignment = Alignment.Center
         ) {
-            Image(
-                painter = painterResource(moodResId),
+            Icon(
+                painter = painterResource(R.drawable.filled_heart_ico),
                 contentDescription = "Valentine's Day",
-                modifier = Modifier.fillMaxSize()
+                tint = Color.White,
+                modifier = Modifier.size(32.dp)
             )
         }
     } else if (mood == null) {
@@ -267,7 +264,7 @@ fun CalendarDayCell(day: CalendarDay, mood: String?) {
             modifier = Modifier
                 .aspectRatio(1.2f)
                 .clip(RoundedCornerShape(8.dp))
-                .background(Color(0xFFDADADA)),
+                .background(AppColors.Calendar.emptyDay),
             contentAlignment = Alignment.Center
         ) {
             Text(
@@ -285,10 +282,10 @@ fun CalendarDayCell(day: CalendarDay, mood: String?) {
                 .clip(RoundedCornerShape(8.dp))
                 .background(
                     when (mood) {
-                        "Good" -> Color(0xFFBEFBAD)
-                        "NotBad", "Not Bad" -> Color(0xFFFE9460)
-                        "Bad" -> Color(0xFFFE878B)
-                        else -> Color(0xFFDADADA)
+                        "Good" -> AppColors.Calendar.goodMood
+                        "NotBad", "Not Bad" -> AppColors.Calendar.notBadMood
+                        "Bad" -> AppColors.Calendar.badMood
+                        else -> AppColors.Calendar.emptyDay
                     }
                 )
         ) {

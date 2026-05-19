@@ -1,4 +1,4 @@
-package com.example.mobile_project_notes_app.components.Calendar
+package com.example.mobile_project_notes_app.features.feature_calendar.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
@@ -33,16 +33,16 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.mobile_project_notes_app.ui.theme.AppColors
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 import java.util.Calendar
+import kotlin.math.abs
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -123,8 +123,8 @@ fun DatePickerBottomSheet(
                             .background(
                                 brush = Brush.horizontalGradient(
                                     colors = listOf(
-                                        Color(0xFF40A474),
-                                        Color(0xFF165A2F)
+                                        AppColors.actionGradientStart,
+                                        AppColors.actionGradientEnd
                                     )
                                 ),
                                 shape = RoundedCornerShape(12.dp)
@@ -164,7 +164,7 @@ fun ScrollableColumn(
             layoutInfo.visibleItemsInfo
                 .minByOrNull { item ->
                     val itemCenter = item.offset + item.size / 2
-                    kotlin.math.abs(itemCenter - viewportCenter)
+                    abs(itemCenter - viewportCenter)
                 }?.index ?: initialIndex
         }
     }
@@ -177,7 +177,7 @@ fun ScrollableColumn(
             layoutInfo.visibleItemsInfo
                 .minByOrNull { item ->
                     val itemCenter = item.offset + item.size / 2
-                    kotlin.math.abs(itemCenter - viewportCenter)
+                    abs(itemCenter - viewportCenter)
                 }?.index
         }
             .distinctUntilChanged()

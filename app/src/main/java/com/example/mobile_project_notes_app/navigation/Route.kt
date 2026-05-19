@@ -18,9 +18,6 @@ sealed interface Route : NavKey {
     data object MoodScreen : Route
 
     @Serializable
-    data object AddVoiceNoteScreen : Route
-
-    @Serializable
     data object SplashScreen : Route
     @Serializable
     data class AddNoteScreen(val noteType: NoteType) : Route

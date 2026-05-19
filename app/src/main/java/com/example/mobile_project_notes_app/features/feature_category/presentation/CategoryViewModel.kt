@@ -1,9 +1,9 @@
-package com.example.mobile_project_notes_app.viewmodel
+package com.example.mobile_project_notes_app.features.feature_category.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mobile_project_notes_app.data.entity.Category
-import com.example.mobile_project_notes_app.features.feature_category.CategoryRepository
+import com.example.mobile_project_notes_app.features.feature_category.domain.CategoryRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -16,7 +16,7 @@ class CategoryViewModel(
     val allCategories: StateFlow<List<Category>> =
         repository.allCategories.stateIn(
             scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
+            started = SharingStarted.Companion.WhileSubscribed(5000),
             initialValue = emptyList()
         )
 

@@ -1,9 +1,9 @@
-package com.example.mobile_project_notes_app.viewmodel
+package com.example.mobile_project_notes_app.features.feature_calendar.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mobile_project_notes_app.data.local.database.entity.CalendarDayEntry
-import com.example.mobile_project_notes_app.data.repository.CalendarRepository
+import com.example.mobile_project_notes_app.features.feature_calendar.data.CalendarRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -23,7 +23,7 @@ class CalendarViewModel(
     val moodEntriesForMonth: StateFlow<List<CalendarDayEntry>> =
         repository.getMoodEntriesForMonth(_currentYearMonth.value).stateIn(
             scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
+            started = SharingStarted.Companion.WhileSubscribed(5000),
             initialValue = emptyList()
         )
 

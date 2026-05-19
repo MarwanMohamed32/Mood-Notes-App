@@ -6,10 +6,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
-import com.example.mobile_project_notes_app.screens.AddNoteScreen
-import com.example.mobile_project_notes_app.features.feature_voice_note.presentation.AddVoiceNoteScreen
+import com.example.mobile_project_notes_app.features.feature_note.presentation.AddNoteScreen
 import com.example.mobile_project_notes_app.screens.Calendar.CalendarMainScreen
-import com.example.mobile_project_notes_app.screens.EditNoteScreen
+import com.example.mobile_project_notes_app.features.feature_note.presentation.EditNoteScreen
 import com.example.mobile_project_notes_app.screens.Home.HomeMainScreen
 import com.example.mobile_project_notes_app.screens.MoodScreen
 import com.example.mobile_project_notes_app.screens.SplashScreen
@@ -19,7 +18,9 @@ import com.example.mobile_project_notes_app.screens.SplashScreen
 fun NavigationRoot(
     modifier: Modifier = Modifier
 ) {
-    val backStack = rememberNavBackStack(Route.AddVoiceNoteScreen)
+    val backStack = rememberNavBackStack(
+        Route.SplashScreen
+    )
 
     NavDisplay(
         backStack = backStack,
@@ -40,7 +41,9 @@ fun NavigationRoot(
                 }
 
                 is Route.SplashScreen -> NavEntry(key) {
-                    SplashScreen({})
+                    SplashScreen(onNavigateToHome = {
+                        backStack.add(Route.MoodScreen)
+                    })
                 }
 
                 is Route.MoodScreen -> NavEntry(key) {
@@ -58,10 +61,6 @@ fun NavigationRoot(
                         onNavigate = { route -> backStack.add(route) },
                         onBackClick = { backStack.removeLastOrNull() }
                     )
-                }
-
-                is Route.AddVoiceNoteScreen -> NavEntry(key) {
-                    AddVoiceNoteScreen()
                 }
 
                 is Route.AddNoteScreen -> NavEntry(key) {
